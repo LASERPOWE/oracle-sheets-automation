@@ -11,31 +11,34 @@ import json
 # ==========================================
 # CONFIGURATION: Yahan apne 20 tasks ki list dalein
 # ==========================================
+TASKS_CONFIG = # ==========================================
+# CONFIGURATION: Yahan apne tasks ki list dalein
+# ==========================================
 TASKS_CONFIG = [
+    # ---- TASK 1 ----
     {
         "sheet_name": "LASER ADVANCE REQUEST",
         "worksheet_name": "PAYMENT ALLOCATION",
-        "query": """
-            select PARTYBILLNO,sum(NVL(DRAMT,0))DRAMT,SUM(NVL(CRAMT,0))CRAMT,SUM(NVL(ALLOC_AMT,0))ALLOC_AMT,
-            SUM(NVL(ASON_ALLOC_AMT,0))ASON_ALLOC_AMT ,SUM(NVL(DRAMT,0)- NVL(ALLOC_AMT,0))BAL_TO_ALLC from LPIERP.view_acc_tran_engine 
-            where  NVL(DRAMT,0) <> 0 AND PARTYBILLNO IS NOT NULL AND VRDATE >= '10-JUN-2024' and LENGTH(PARTYBILLNO) = '8'
-            GROUP BY PARTYBILLNO
-            union all
-            select substr(narration,2,8)as PARTYBILLNO,sum(NVL(DRAMT,0))DRAMT,SUM(NVL(CRAMT,0))CRAMT,SUM(NVL(ALLOC_AMT,0))ALLOC_AMT,
-            SUM(NVL(ASON_ALLOC_AMT,0))ASON_ALLOC_AMT ,SUM(NVL(DRAMT,0)- NVL(ALLOC_AMT,0))BAL_TO_ALLC from LPIERP.view_acc_tran_engine 
-            where  NVL(DRAMT,0) <> 0  AND VRDATE >= '10-JUN-2024' and narration like ('%@%')
-            GROUP BY substr(narration,2,8)
-        """
+        "query": """select PARTYBILLNO,sum(NVL(DRAMT,0))DRAMT,SUM(NVL(CRAMT,0))CRAMT,SUM(NVL(ALLOC_AMT,0))ALLOC_AMT,
+        SUM(NVL(ASON_ALLOC_AMT,0))ASON_ALLOC_AMT ,SUM(NVL(DRAMT,0)- NVL(ALLOC_AMT,0))BAL_TO_ALLC from LPIERP.view_acc_tran_engine 
+        where  NVL(DRAMT,0) <> 0 AND PARTYBILLNO IS NOT NULL AND VRDATE >= '10-JUN-2024' and LENGTH(PARTYBILLNO) = '8'
+        GROUP BY PARTYBILLNO
+        union all
+        select substr(narration,2,8)as PARTYBILLNO,sum(NVL(DRAMT,0))DRAMT,SUM(NVL(CRAMT,0))CRAMT,SUM(NVL(ALLOC_AMT,0))ALLOC_AMT,
+        SUM(NVL(ASON_ALLOC_AMT,0))ASON_ALLOC_AMT ,SUM(NVL(DRAMT,0)- NVL(ALLOC_AMT,0))BAL_TO_ALLC from LPIERP.view_acc_tran_engine 
+        where  NVL(DRAMT,0) <> 0  AND VRDATE >= '10-JUN-2024' and narration like ('%@%')
+        GROUP BY substr(narration,2,8)"""
     },
-    # Aap yahan aise hi 20 tasks add kar sakte hain...
-    # {
-    #     "sheet_name": "LASER PROJECT ADVANCE REQUEST",
-    #     "worksheet_name": "PAYMENT ALLOCATION",
-    #     "query": ""select substr(PARTICULAR,-8,8)as PARTYBILLNO,sum(NVL(DRAMT,0))DRAMT,SUM(NVL(CRAMT,0))CRAMT,SUM(NVL(ALLOC_AMT,0))ALLOC_AMT,
-SUM(NVL(ASON_ALLOC_AMT,0))ASON_ALLOC_AMT ,SUM(NVL(DRAMT,0)- NVL(ALLOC_AMT,0))BAL_TO_ALLC from LPIERP.view_acc_tran_engine 
-where  NVL(DRAMT,0) <> 0  AND VRDATE >= '17-JUl-2024' and PARTICULAR LIKE ('%ADVANCE%') AND DIV_CODE = 'RE' 
-GROUP BY substr(PARTICULAR,-8,8)""
-    # },
+    
+    # ---- TASK 2 (Naya wala) ----
+    {
+        "sheet_name": "LASER PROJECT ADVANCE REQUEST",
+        "worksheet_name": "PAYMENT ALLOCATION",
+        "query": """select substr(PARTICULAR,-8,8)as PARTYBILLNO,sum(NVL(DRAMT,0))DRAMT,SUM(NVL(CRAMT,0))CRAMT,SUM(NVL(ALLOC_AMT,0))ALLOC_AMT,
+        SUM(NVL(ASON_ALLOC_AMT,0))ASON_ALLOC_AMT ,SUM(NVL(DRAMT,0)- NVL(ALLOC_AMT,0))BAL_TO_ALLC from LPIERP.view_acc_tran_engine 
+        where  NVL(DRAMT,0) <> 0  AND VRDATE >= '17-JUl-2024' and PARTICULAR LIKE ('%ADVANCE%') AND DIV_CODE = 'RE' 
+        GROUP BY substr(PARTICULAR,-8,8)"""
+    }
 ]
 
 # Database Settings (Environment Variables se aayenge)
