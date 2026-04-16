@@ -53,7 +53,7 @@ def run_sync():
 
     # 2. Setup Oracle Client (GitHub Runner ke path ke liye)
     try:
-        oracledb.init_oracle_client(lib_dir="./instantclient")
+        oracledb.init_oracle_client(lib_dir="./instantclient/instantclient_19_24")
     except Exception as e:
         print(f"Oracle Client Info: {e}")
 
