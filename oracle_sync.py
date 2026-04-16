@@ -9,9 +9,6 @@ import os
 import json
 
 # ==========================================
-# CONFIGURATION: Yahan apne 20 tasks ki list dalein
-# ==========================================
-TASKS_CONFIG = # ==========================================
 # CONFIGURATION: Yahan apne tasks ki list dalein
 # ==========================================
 TASKS_CONFIG = [
