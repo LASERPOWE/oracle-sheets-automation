@@ -30,4 +30,5 @@ jobs:
         env:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           GOOGLE_JSON_KEY: ${{ secrets.GOOGLE_JSON_KEY }}
+          LD_LIBRARY_PATH: ${{ github.workspace }}/instantclient/instantclient_19_24
         run: python oracle_sync.py
