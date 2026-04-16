@@ -1,0 +1,33 @@
+name: Daily Oracle to Sheets Sync
+
+on:
+  schedule:
+    # Subah 7:30 AM IST par chalega (2:00 AM UTC)
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-sync-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies & Oracle Client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libaio1
+          wget -q https://download.oracle.com/otn_software/linux/instantclient/1924000/instantclient-basic-linux.x64-19.24.0.0.0dbru.zip
+          unzip -q instantclient-basic-linux.x64-19.24.0.0.0dbru.zip -d ./instantclient
+          pip install -r requirements.txt
+
+      - name: Execute Python Script
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          GOOGLE_JSON_KEY: ${{ secrets.GOOGLE_JSON_KEY }}
+        run: python oracle_sync.py
