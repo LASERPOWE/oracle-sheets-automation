@@ -27,7 +27,7 @@ TASKS_CONFIG = [
         GROUP BY substr(narration,2,8)"""
     },
     
-    # ---- TASK 2 (Naya wala) ----
+    # ---- TASK 2 ----
     {
         "sheet_name": "LASER PROJECT ADVANCE REQUEST",
         "worksheet_name": "PAYMENT ALLOCATION",
@@ -35,6 +35,13 @@ TASKS_CONFIG = [
         SUM(NVL(ASON_ALLOC_AMT,0))ASON_ALLOC_AMT ,SUM(NVL(DRAMT,0)- NVL(ALLOC_AMT,0))BAL_TO_ALLC from LPIERP.view_acc_tran_engine 
         where  NVL(DRAMT,0) <> 0  AND VRDATE >= '17-JUl-2024' and PARTICULAR LIKE ('%ADVANCE%') AND DIV_CODE = 'RE' 
         GROUP BY substr(PARTICULAR,-8,8)"""
+    },
+
+    # ---- TASK 3 (Aapka Naya Query) ----
+    {
+        "sheet_name": "LASER PARTY MASTER LIVE ERP",
+        "worksheet_name": "LASER PARTY MASTER",
+        "query": """SELECT ACC_CODE,ACC_NAME,ACC_TYPE FROM LPIERP.ACC_MAST order by acc_name asc"""
     }
 ]
 
