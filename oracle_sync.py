@@ -70,7 +70,7 @@ nvl(A.DIDM_SO_QTY,0)DIDM_SO_QTY
 FROM lpierp.VIEW_ORDER_LPI a 
 LEFT OUTER JOIN LPIERP.VIEW_ITEM_MAST_ENGINE G ON A.ITEM_CODE = G.ITEM_CODE
 WHERE a.TCODE = 'O' AND a.TNATURE = 'SORD' AND (nvl(a.qtyorder,0)-nvl(a.QTYCANCELLED,0))> 0 AND NVL(A.CLOSED_FLAG,'#')<> 'C' AND (NVL(a.qtyorder,0)-nvl(a.QTYCANCELLED,0)-NVL(a.qtyexecute,0))>0
-AND SUBSTR(a.VRNO,1,2)IN ('L1','L4','SP','L2','L6','L9')"""
+AND SUBSTR(a.VRNO,1,2)IN ('L1','SP','L2','L6')"""
     }
 ]
 # Database Settings (Environment Variables se aayenge)
