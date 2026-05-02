@@ -44,7 +44,35 @@ TASKS_CONFIG = [
         "query": """SELECT ACC_CODE,ACC_NAME,ACC_TYPE FROM LPIERP.ACC_MAST order by acc_name asc"""
     }
 ]
+    # ---- TASK 4  ----
+    {
+        "sheet_name": "OPEN MC",
+        "worksheet_name": "OPEN MC",
+        "query": """SELECT a.contract_vrno,A.irfield3 AS PRICE_BASIS,
+a.ACC_CODE,LPIERP.lhs_utility.get_name('ACC_CODE',A.ACC_CODE) ACC_NAME,
+a.partyrefno,
+a.VRNO AS MC_NO,
+a.VRDATE AS MC_DATE,
+a.SLNO,
+a.ITEM_CODE,
+a.ITEM_NAME,
+A.bom_id,
+G.LEVEL_3_NAME,
+G.LEVEL_4_NAME,
+a.UM,
 
+nvl(a.qtyorder,0)-nvl(a.QTYCANCELLED,0)as NET_MC ,
+a.TNATURE,nvl(A.qtyexecute,0) AS BILLED,(NVL(a.qtyorder,0)-nvl(a.QTYCANCELLED,0)-NVL(A.qtyexecute,0))AS BAL_BILL,(NVL(a.qtyorder,0)-nvl(a.QTYCANCELLED,0)-NVL(A.qtyexecute,0))*a.rate as BAL_BILL_VALUE,
+nvl(A.INSPO_QTY,0)INSPO_QTY,
+nvl(A.INSPO_SO_QTY,0)INSPO_SO_QTY,
+nvl(A.INSPE_SO_QTY,0)INSPE_SO_QTY,
+nvl(A.DIDM_SO_QTY,0)DIDM_SO_QTY
+FROM lpierp.VIEW_ORDER_LPI a 
+LEFT OUTER JOIN LPIERP.VIEW_ITEM_MAST_ENGINE G ON A.ITEM_CODE = G.ITEM_CODE
+WHERE a.TCODE = 'O' AND a.TNATURE = 'SORD' AND (nvl(a.qtyorder,0)-nvl(a.QTYCANCELLED,0))> 0 AND NVL(A.CLOSED_FLAG,'#')<> 'C' AND (NVL(a.qtyorder,0)-nvl(a.QTYCANCELLED,0)-NVL(a.qtyexecute,0))>0
+AND SUBSTR(a.VRNO,1,2)IN ('L1','L4','SP','L2','L6','L9')"""
+    }
+]
 # Database Settings (Environment Variables se aayenge)
 DB_USER = "lpierp"
 DB_PASS = os.getenv('DB_PASSWORD')
