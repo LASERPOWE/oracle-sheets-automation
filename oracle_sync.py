@@ -42,8 +42,8 @@ TASKS_CONFIG = [
         "sheet_name": "LASER PARTY MASTER LIVE ERP",
         "worksheet_name": "LASER PARTY MASTER",
         "query": """SELECT ACC_CODE,ACC_NAME,ACC_TYPE FROM LPIERP.ACC_MAST order by acc_name asc"""
-    }
-]
+    },
+
     # ---- TASK 4  ----
     {
         "sheet_name": "OPEN MC",
@@ -72,6 +72,7 @@ TASKS_CONFIG = [
  AND SUBSTR(a.VRNO,1,2)IN ('L1','SP','L2','L6')"""
     }
 ]
+
 # Database Settings (Environment Variables se aayenge)
 DB_USER = "lpierp"
 DB_PASS = os.getenv('DB_PASSWORD')
