@@ -46,7 +46,7 @@ TASKS_CONFIG = [
 
     # ---- TASK 4  ----
     {
-        "sheet_name": "BAL TO PRODUCTION AG PRODUCTION ORDER (CONDUCTOR)",
+        "sheet_name": "OPEN MC LASER",
         "worksheet_name": "OPEN MC",
         "query": """SELECT a.contract_vrno,A.irfield3 AS PRICE_BASIS,
  a.ACC_CODE,LPIERP.lhs_utility.get_name('ACC_CODE',A.ACC_CODE) ACC_NAME,
