@@ -37,7 +37,7 @@ TASKS_CONFIG = [
         GROUP BY substr(PARTICULAR,-8,8)"""
     },
 
-    # ---- TASK 3 (Aapka Naya Query) ----
+    # ---- TASK 3 ----
     {
         "sheet_name": "LASER PARTY MASTER LIVE ERP",
         "worksheet_name": "LASER PARTY MASTER",
@@ -86,7 +86,7 @@ def run_sync():
     creds = ServiceAccountCredentials.from_json_keyfile_dict(json_key_data, scope)
     client = gspread.authorize(creds)
 
-    # 2. Setup Oracle Client (GitHub Runner ke path ke liye)
+    # 2. Setup Oracle Client
     try:
         oracledb.init_oracle_client(lib_dir="./instantclient/instantclient_19_24")
     except Exception as e:
@@ -100,6 +100,17 @@ def run_sync():
         try:
             conn = oracledb.connect(user=DB_USER, password=DB_PASS, dsn=DB_DSN)
             df = pd.read_sql(task['query'], con=conn)
+            
+            # --- TIMPESTAMP FIX ---
+            # Automatically convert strictly recognized datetime columns to string
+            for col in df.select_dtypes(include=['datetime64', 'datetimetz']).columns:
+                df[col] = df[col].dt.strftime('%Y-%m-%d %H:%M:%S')
+                
+            # Catch stray objects that Oracle sometimes passes as python datetimes
+            for col in df.select_dtypes(include=['object']).columns:
+                df[col] = df[col].apply(lambda x: str(x) if isinstance(x, (pd.Timestamp, datetime)) else x)
+            # ----------------------
+            
             df = df.fillna('')
             
             sheet = client.open(task['sheet_name']).worksheet(task['worksheet_name'])
