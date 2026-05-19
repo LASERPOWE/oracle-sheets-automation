@@ -71,7 +71,7 @@ TASKS_CONFIG = [
  WHERE a.TCODE = 'O' AND a.TNATURE = 'SORD' AND (nvl(a.qtyorder,0)-nvl(a.QTYCANCELLED,0))> 0 AND NVL(A.CLOSED_FLAG,'#')<> 'C' AND (NVL(a.qtyorder,0)-nvl(a.QTYCANCELLED,0)-NVL(a.qtyexecute,0))>0
  AND SUBSTR(a.VRNO,1,2)IN ('L1','SP','L2','L6')"""
     }
-      # ---- TASK 4  ----
+      # ---- TASK 5  ----
     {
         "sheet_name": "BAL TO PRODUCTION AG PRODUCTION ORDER (CONDUCTOR)",
         "worksheet_name": "ERP DUMP_PROD_ORD_OPEN MC",
